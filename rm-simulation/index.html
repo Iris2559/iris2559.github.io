@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RM amélioré — simulation</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g:#0AC786;--gd:#07905f;--mint:#E8FBF4;--txt:#404040;--red:#D64E5A;--org:#F2A62C;--blu:#1239D9;--gry:#B5B5B5}
+*{box-sizing:border-box}
+body{margin:0;font-family:Poppins,"Segoe UI",Arial,sans-serif;color:var(--txt);background:#fff;font-size:12px}
+a{color:var(--g);cursor:pointer;text-decoration:none}
+.app{display:flex;min-height:100vh}
+.side{width:210px;flex-shrink:0;background:#F8F9FB;display:flex;flex-direction:column;padding:18px 16px;gap:4px}
+.logo{font-size:28px;font-weight:800;color:#1E2A26;letter-spacing:-1px;line-height:1}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-radius:12px;font-size:12px;color:var(--txt)}
+.nav.on{background:var(--g);color:#fff}
+.sec{font-size:11px;font-weight:600;color:#1E2A26;margin:10px 0 4px}
+.main{flex:1;display:flex;flex-direction:column;min-width:0;position:relative}
+.top{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 30px}
+.user{display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.band{background:var(--mint);padding:16px 36px;display:flex;justify-content:space-between;align-items:center}
+.title{font-size:24px;font-weight:800;color:var(--g)}
+.content{padding:18px 36px;display:flex;flex-direction:column;gap:12px}
+.btn{background:var(--g);color:#fff;border-radius:12px;padding:9px 16px;font-weight:600;display:inline-block}
+.btn2{border:1px solid var(--org);color:#E08A00;border-radius:10px;padding:8px 16px;font-weight:600}
+.badge{color:#fff;border-radius:700px;padding:2px 8px;font-size:10px;font-weight:600;white-space:nowrap;display:inline-block}
+.pill{border-radius:700px;font-size:10px;font-weight:600;padding:1px 8px;background:var(--red);color:#fff}
+table{border-collapse:collapse;width:100%}
+th{font-size:10px;font-weight:600;color:#000;text-align:left;padding:10px 8px;text-transform:uppercase;background:var(--mint)}
+td{font-size:12px;color:#000;padding:10px 8px;border-top:1px solid #EFEFEF;position:relative}
+.menu{position:absolute;right:30px;top:8px;width:340px;background:#fff;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.18);padding:6px;display:flex;flex-direction:column;z-index:5}
+.menu span,.menu a{padding:8px 10px;border-radius:8px}
+.new{border:2px dashed #F59E0B;border-radius:12px;padding:10px 12px}
+.newitem{border:2px dashed #F59E0B;background:#FFF8EA;color:#0B7A55;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.chip{background:#F59E0B;color:#1F1300;border-radius:700px;padding:1px 8px;font-size:10px;font-weight:700;margin-left:8px}
+body.plain .new{border:none;padding:0}body.plain .newitem{border:none;background:none}body.plain .chip{display:none}
+.grid{display:flex;border:1px solid #DADADA}
+.hours{width:56px;flex-shrink:0}
+.hours div,.col .cell{height:52px;border-bottom:1px solid #EEE;font-size:10px;padding:2px 6px;color:#888}
+.colh{height:58px;border-bottom:1px solid #DADADA;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;background:#FAFAFA}
+.col{flex:1;min-width:0;border-left:1px solid #DADADA;display:flex;flex-direction:column}
+.colbody{height:468px;position:relative}
+.bloc{position:absolute;left:6px;right:6px;color:#fff;border-radius:6px;padding:4px 8px;display:flex;flex-direction:column;overflow:hidden}.bloc.am{padding-right:30px}.vx{position:absolute;top:4px;right:5px;width:19px;height:19px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;background:#fff}.vx.v{color:#12B312}.vx.x{color:#D64E5A}.bloc{cursor:pointer}
+.bloc b,.bloc span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drop{position:absolute;left:6px;right:6px;bottom:8px;border:2px dashed var(--blu);border-radius:8px;padding:10px 4px;text-align:center;color:var(--blu);font-weight:600;background:#F2F5FF}
+.slot{position:absolute;left:6px;right:6px;height:46px;margin-top:3px;border:2px dashed var(--blu);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--blu);font-weight:600;background:#F2F5FF;font-size:11px}.slot:hover{background:#DCE5FF}
+input.field,select.field{font:inherit;color:inherit;background:#fff;width:100%}
+.mailbox{border:1px solid #DADADA;border-radius:10px;padding:10px 12px;font-size:12px;line-height:1.5;background:#FCFCFC}
+.pt{font-size:10px;background:#FFF3DC;color:#8A5300;border-radius:700px;padding:1px 8px}
+.drawer{position:absolute;top:56px;right:0;bottom:0;width:640px;background:#fff;box-shadow:-6px 0 20px rgba(0,0,0,.12);padding:16px 18px;display:flex;flex-direction:column;gap:10px;overflow-y:auto}
+.card{border:1px solid #E3E3E3;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.card.sel{border:2px solid var(--blu)}
+.tab{position:fixed;right:0;bottom:24px;background:#1E7BFF;color:#fff;border-radius:12px 0 0 12px;padding:14px 16px;font-weight:600}
+.overlay{position:fixed;inset:0;background:rgba(20,30,28,.45);display:flex;align-items:center;justify-content:center;z-index:20}
+.modal{width:560px;background:#fff;border-radius:14px;padding:22px 26px;display:flex;flex-direction:column;gap:10px}
+.lbl{font-size:10px;font-weight:600;color:var(--g);background:var(--mint);border-radius:4px;padding:1px 6px;align-self:flex-start}
+.field{border:1px solid #DADADA;border-radius:8px;padding:8px 10px}
+.row{display:flex;gap:10px}.f{flex:1;display:flex;flex-direction:column;gap:3px}
+.opt{border:1px solid #DADADA;border-radius:8px;padding:6px 10px}.opt.on{background:var(--g);color:#fff;border-color:var(--g);font-weight:600}
+.toast{position:fixed;left:240px;bottom:24px;max-width:calc(100vw - 470px);background:var(--g);color:#fff;border-radius:12px;padding:12px 18px;font-weight:600;box-shadow:0 4px 14px rgba(0,0,0,.18);z-index:30}
+.legend{display:flex;gap:14px;font-size:10px;color:#555}.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+.note{font-size:11px;color:#666}
+.plq{color:var(--g);font-weight:600;text-decoration:underline dotted}
+.kpi{flex:1;border:1px solid #E3E3E3;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:4px}
+.kpi b{font-size:14px}
+.vtabs{display:flex;gap:6px;border-bottom:1px solid #E3E3E3}.vtabs a{padding:8px 14px;color:var(--txt);border-bottom:3px solid transparent}.vtabs a.on{color:var(--g);border-color:var(--g);font-weight:600}
+.switch{font-size:11px;color:#555;display:flex;gap:6px;align-items:center}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const S = { screen: (location.hash==='#planning'?'planning':'decl'), menu:null, modal:null, cur:null, created:{}, placed:{}, tache:false, picked:null, drawer:true, toast:'', typeInt:'rapide', slot:{}, extra:[], ajType:'veh', form:{}, aplacer:null, veh:null, vtab:'suivi', depl:null, fait:{}, clos:{}, replan:{}, envoye:{}, renvoi:{}, mailIds:[], blocId:null };
+const raw = [
+ {id:'a', type:'Béquilles', plaque:'XX359HS', date:'05/06/2026 09:35', desc:'béquille très dure et saute de cran', photo:'Oui', rouler:'Oui', ou:'Site Port', dispo:"Dispo aujourd'hui"},
+ {id:'b', type:'Entretiens', plaque:'XX137BY', date:'18/05/2026 11:23', desc:'pas ABS, dangereux sous pluie', photo:'Non', rouler:'Non', ou:'Site Port', dispo:"Dispo aujourd'hui"},
+ {id:'c', type:'Casses', plaque:'XX211DW', date:'18/05/2026 03:42', desc:'porte coffre à équerres côté passager', photo:'Oui', rouler:'Oui', ou:'En tournée', dispo:'Retour demain'},
+ {id:'d', type:'Dysfonctionnement éclairages', plaque:'XX174CX', date:'27/05/2026 14:25', desc:'clignotant gauche HS, ampoule correcte', photo:'Non', rouler:'Oui', ou:'Site Nord', dispo:"Dispo aujourd'hui"},
+ {id:'e', type:'Casses', plaque:'XX433JQ', date:'27/05/2026 19:53', desc:'tordue gauche', photo:'Oui', rouler:'[à confirmer]', ou:'Site Port', dispo:"Dispo aujourd'hui"},
+ {id:'f', type:'Casses', plaque:'XX248EV', date:'28/05/2026 05:00', desc:'manque garde-boue arrière droit', photo:'Oui', rouler:'Oui', ou:'En tournée', dispo:'Retour [date]'},
+ {id:'g', type:'Casses', plaque:'XX470KP', date:'03/06/2026 12:59', desc:'pare-chocs', photo:'Oui', rouler:'Oui', ou:'Site Port', dispo:"Dispo aujourd'hui"},
+ {id:'h', type:'Béquilles', plaque:'XX285FU', date:'05/06/2026 12:03', desc:'sabot qui ne tient plus', photo:'Oui', rouler:'Oui', ou:'Site Port', dispo:"Dispo aujourd'hui"}
+];
+const byId = Object.fromEntries(raw.map(r=>[r.id,r]));
+// véhicules — données d'exemple
+const VEH = {
+ XX359HS:{type:'SR Porte conteneur',marque:'MARQUE A',pole:'Conteneur',rouler:'Oui',ou:'Site Port',mines:'12/01/2027',rdv:'',prepa:'À faire',tachy:'',lim:''},
+ XX137BY:{type:'SR Porte conteneur',marque:'MARQUE B',pole:'Conteneur',rouler:'Non',ou:'Site Port',mines:'20/11/2026',rdv:'18/11/2026 · Centre de contrôle',prepa:'En cours',tachy:'',lim:''},
+ XX211DW:{type:'SR Plateau',marque:'MARQUE C',pole:'Conventionnel',rouler:'Oui',ou:'En tournée',mines:'03/03/2027',rdv:'',prepa:'—',tachy:'',lim:''},
+ XX174CX:{type:'SR Frigorifique',marque:'MARQUE E',pole:'Conventionnel',rouler:'Oui',ou:'Site Nord',mines:'28/02/2027',rdv:'',prepa:'—',tachy:'',lim:''},
+ XX433JQ:{type:'SR Porte conteneur',marque:'MARQUE F',pole:'Conteneur',rouler:'[à confirmer]',ou:'Site Port',mines:'09/12/2026',rdv:'',prepa:'À faire',tachy:'',lim:''},
+ XX248EV:{type:'SR Porte conteneur',marque:'MARQUE D',pole:'Traction',rouler:'Oui',ou:'En tournée',mines:'15/05/2027',rdv:'',prepa:'—',tachy:'',lim:''},
+ XX470KP:{type:'SR Porte conteneur',marque:'MARQUE A',pole:'Conteneur',rouler:'Oui',ou:'Site Port',mines:'30/04/2027',rdv:'',prepa:'—',tachy:'',lim:''},
+ XX285FU:{type:'SR Porte conteneur',marque:'MARQUE B',pole:'Conteneur',rouler:'Oui',ou:'Site Port',mines:'22/01/2027',rdv:'',prepa:'—',tachy:'',lim:''},
+ XX544MN:{type:'Tracteur routier',marque:'DAF',pole:'Conteneur',rouler:'[à confirmer]',ou:'Site Nord',mines:'25/11/2026',rdv:'',prepa:'À faire',tachy:'25/11/2026',lim:'25/11/2026'},
+ XX322GT:{type:'Tracteur routier',marque:'MAN',pole:'Conventionnel',rouler:'Oui',ou:'Site Nord',mines:'14/06/2027',rdv:'',prepa:'—',tachy:'14/06/2027',lim:'14/06/2027'},
+ XX618OL:{type:'Tracteur routier',marque:'DAF',pole:'Traction',rouler:'Oui',ou:'Site Nord',mines:'08/09/2027',rdv:'',prepa:'—',tachy:'08/09/2027',lim:'08/09/2027'},
+ XX100AZ:{type:'SR Frigorifique',marque:'MARQUE E',pole:'Conventionnel',rouler:'Non',ou:'Garage extérieur',mines:'29/06/2026',rdv:'',prepa:'—',tachy:'',lim:''}
+};
+const lienPlaque = (p)=> VEH[p] ? `<a class="plq" data-a="veh:${p}">${p}</a>` : p;
+const H = 52;
+const C = { gry:'#B5B5B5', blu:'#1239D9', grn:'#12B312', red:'#D64E5A', org:'#F2A62C' };
+const badge = (bg, txt, col) => `<span class="badge" style="background:${bg};color:${col||'#fff'}">${txt}</span>`;
+const cols = {
+ m1:{nom:'Mécanicien PL 1', pt:'Arrivé 07:32 · Site Nord', drop:[H*6,'14:00'], base:[[0,2,'#B86A12','XX137BY · Préparation mines','08:00 – 10:00 · Site Port'],[5,1,'#0AC786','XX322GT · Voyants tableau de bord','13:00 – 14:00']]},
+ m2:{nom:'Mécanicien PL 2', pt:'Arrivé 07:45 · Site Port', drop:[H*5,'13:00'], base:[[1,2,'#0AC786','XX618OL · Changement pneu','09:00 – 11:00 · Site Nord'],[4,0.5,'#5B6CC9','Aller chercher des pièces','12:00 – 12:30 · sans véhicule']]},
+ m3:{nom:'Mécanicien PL 3', pt:'Arrivé 07:58 · Site Nord', drop:[H*2,'10:00'], base:[[0,1.5,'#7A8A86','Administratif','08:00 – 09:30 · hors mécanique'],[7,2,'#7A8A86','Rendez-vous','15:00 – 17:00 · départ plus tôt']]},
+ g:{nom:'Garage extérieur', pt:'', drop:[H*1,'09:00'], base:[[0,1,'#7A8A86','XX100AZ · au garage extérieur','retour prévu [date]']]}
+};
+function intervList(){
+ const L=[];
+ raw.forEach(r=>{ if(S.created[r.id]) L.push({key:r.id,kind:'veh',dur:1,type:S.created[r.id],plaque:r.plaque,cree:'16/11/2026',duree:'01:00',comm:r.desc,rouler:r.rouler,ou:r.ou,dispo:r.dispo,decl:'↗ déclaration du '+r.date.slice(0,10)+(S.replan[r.id]?' · à replanifier : '+S.replan[r.id]:'')}); });
+ S.extra.forEach(x=>L.push(x));
+ L.push({key:'x',kind:'veh',dur:1,type:'Intervention immo',plaque:'XX544MN',cree:'08/07/2026',duree:'00:00',comm:'limiteur + mines + pneus avant + pare-brise',rouler:'[à confirmer]',ou:'[à confirmer]',dispo:'[à confirmer]',decl:'saisie à la main (pas de déclaration liée)'});
+ return L;
+}
+const hh = (x)=>{ const m=Math.round((8+x)*60); return String(Math.floor(m/60)).padStart(2,'0')+'h'+String(m%60).padStart(2,'0'); };
+const couleur = (it)=> it.kind==='tache'?'#5B6CC9':(it.kind==='hors'?'#7A8A86':(/mines/i.test(it.type)?'#B86A12':'#0AC786'));
+function occupe(k, sauf){ const o=[]; cols[k].base.forEach(x=>o.push([x[0],x[0]+x[1]])); Object.entries(S.slot).forEach(([id,s])=>{ if(s.k===k && id!==sauf) o.push([s.i,s.i+s.d]); }); return o; }
+function aEnvoyer(){ const m=Object.fromEntries(intervList().map(i=>[i.key,i])); return Object.keys(S.slot).filter(id=>m[id]&&m[id].kind==='veh'&&!S.envoye[id]&&!S.fait[id]); }
+function set(p){ Object.assign(S,p); render(); }
+function bloc(top,h,bg,t,s){ const court=h<40; return `<div class="bloc" title="${t} · ${s}" style="top:${top}px;height:${h}px;background:${bg}${court?';padding:3px 8px;justify-content:center':''}"><b${court?' style="font-size:11px"':''}>${t}${court?` <span style="font-weight:400;font-size:10px">· ${s.split(' · ')[0]}</span>`:''}</b>${court?'':`<span style="font-size:10px">${s}</span>`}</div>`; }
+function render(){
+ const all = intervList(); const allMap = Object.fromEntries(all.map(i=>[i.key,i]));
+ const nb = 179 - Object.keys(S.clos).length;
+ let h = `<div class="app"><div class="side"><div style="margin-bottom:14px"><div class="logo">RM</div><div style="font-size:11px">ressources matérielles</div></div><div style="height:30px;border:1px solid #DADADA;border-radius:8px;background:#fff;margin-bottom:18px"></div>
+ <div class="sec">Société</div><a class="nav ${S.screen==='vehs'||S.screen==='veh'?'on':''}" data-a="go:vehs">Véhicules</a><span class="nav">Ressources matérielles</span><span class="nav">Contrats</span><span class="nav">Contrôles réglementaires</span>
+ <a class="nav ${S.screen==='planning'?'on':''}" data-a="go:planning">Planning</a>
+ <a class="nav ${S.screen==='decl'?'on':''}" data-a="go:decl">Déclarations <span class="pill">${nb}</span></a>
+ <div class="sec">Salariés <span class="chip" style="margin-left:6px">Nouveau</span></div><a class="nav" href="salaries.html" style="padding-left:24px">Salariés</a><a class="nav" href="salaries.html#demandes" style="padding-left:24px">Demandes</a><a class="nav" href="salaries.html#pointage" style="padding-left:24px">Pointage du jour</a><a class="nav" href="salaries.html#releve" style="padding-left:24px">Relevé du mois</a>
+ <div class="sec">Général</div><span class="nav">Accueil</span><span class="nav" style="color:#9AA3A0">Paramètres</span>
+ <label class="switch" style="margin-top:20px"><input type="checkbox" data-a="plain" ${document.body.classList.contains('plain')?'':'checked'}> Montrer les nouveautés</label>
+ <span style="margin-top:auto;font-size:11px;text-align:center">Simulation — données fictives</span></div>
+ <div class="main"><div class="top"><span style="font-size:20px">☰</span><div style="display:flex;align-items:center;gap:20px"><b>16 novembre 2026</b><span class="pill">${nb}</span><div class="user"><b>Gestionnaire de parc</b></div></div></div>`;
+ if(S.screen==='vehs'){
+  h += `<div class="band"><span class="title">Véhicules</span><span class="btn">+ Ajouter</span></div><div class="content"><div class="new"><span class="chip" style="margin:0 0 8px 0;display:inline-block">Nouveau · dans la liste, seulement l'information de terrain ; le détail est dans la fiche</span>
+  <table><tr><th>Véhicule</th><th>Type</th><th>Pôle</th><th>Prochaine échéance</th><th>RDV</th><th>Prépa mines</th><th>Où il est</th></tr>`;
+  Object.entries(VEH).forEach(([p,v])=>{ const dep = v.mines && /2026$/.test(v.mines) && +v.mines.slice(3,5)<11;
+   h += `<tr><td>${lienPlaque(p)}</td><td>${v.type}</td><td>${v.pole}</td><td>Mines ${dep?badge(C.red,v.mines):v.mines}</td><td>${v.rdv||'<span class="note">pas de RDV</span>'}</td><td>${v.prepa==='À faire'?badge(C.org,'À faire'):(v.prepa==='En cours'?badge(C.blu,'En cours'):'—')}</td><td>${v.ou}</td></tr>`; });
+  h += `</table></div><span class="note">Un clic sur la plaque ouvre la fiche du véhicule.</span></div>`;
+ } else if(S.screen==='veh'){ const p=S.veh, v=VEH[p], tracteur=/Tracteur/.test(v.type);
+  const decl = raw.filter(r=>r.plaque===p), inter = all.filter(i=>i.plaque===p);
+  const onglet = (k,l)=>`<a class="${S.vtab===k?'on':''}" data-a="vtab:${k}">${l}</a>`;
+  h += `<div class="band"><div><span class="title">${p}</span> <span style="font-size:14px;margin-left:8px">${v.type} · ${v.marque} · pôle ${v.pole}</span></div><div style="display:flex;gap:8px"><a class="btn2" data-a="go:vehs">‹ Véhicules</a><a class="btn" data-a="creerVeh">+ Créer une intervention</a></div></div><div class="content">
+  <div class="new" style="display:flex;gap:10px"><div class="kpi"><span class="note">Prochaine échéance</span><b>Mines · ${v.mines}</b><span class="note">${v.rdv?'RDV '+v.rdv:'Pas de RDV posé'}</span></div><div class="kpi"><span class="note">Prépa mines</span><b>${v.prepa}</b></div><div class="kpi"><span class="note">Où il est</span><b>${v.ou}</b></div><div class="kpi"><span class="note">En cours</span><b>${decl.length} déclaration(s) · ${inter.length} intervention(s)</b></div></div>
+  <div class="vtabs">${onglet('suivi','Suivi')}${onglet('ctrl','Contrôles réglementaires')}${onglet('docs','Documents')}${onglet('hist','Historique')}</div>`;
+  if(S.vtab==='suivi'){
+   h += `<div class="new" style="display:flex;flex-direction:column;gap:8px"><span class="chip" style="margin:0;align-self:flex-start">Nouveau · déclarations et interventions du véhicule au même endroit</span><b>Déclarations</b>`;
+   if(!decl.length) h += `<span class="note">Aucune déclaration en cours.</span>`;
+   decl.forEach(r=>{ const fait=S.created[r.id];
+    h += `<div class="card" style="flex-direction:row;justify-content:space-between;align-items:center"><span><b>${r.type}</b> · ${r.desc} <span class="note">· ${r.date}</span></span>${fait?(S.clos[r.id]?badge(C.grn,'traitée'):badge(S.placed[r.id]?C.blu:C.org, S.placed[r.id]?'planifié '+S.placed[r.id]:'en attente de planning')):`<a class="btn" data-a="creer:${r.id}" style="padding:5px 12px">Créer l'intervention</a>`}</div>`; });
+   h += `<b style="margin-top:6px">Interventions</b>`;
+   if(!inter.length) h += `<span class="note">Aucune intervention.</span>`;
+   inter.forEach(i=>{ const pla=S.placed[i.key];
+    h += `<div class="card" style="flex-direction:row;justify-content:space-between;align-items:center"><span><b>${i.type}</b> · ${i.comm} <span class="note">· ${i.decl||'saisie sans déclaration'}</span></span>${S.fait[i.key]?badge(C.grn,'réalisée · '+S.fait[i.key].travaux):pla?badge(C.blu,'planifiée '+pla):`<a class="btn" data-a="placerVeh:${i.key}" style="padding:5px 12px">Placer sur le planning</a>`}</div>`; });
+   h += `</div>`;
+  } else if(S.vtab==='ctrl'){
+   h += `<table><tr><th>Contrôle</th><th>Échéance</th><th>Dernier passage</th><th>RDV</th><th>PV</th></tr><tr><td>Mines</td><td>${v.mines}</td><td>[exemple]</td><td>${v.rdv||'—'}</td><td><a>PV mines.pdf</a></td></tr>${tracteur?`<tr><td>Tachygraphe</td><td>${v.tachy}</td><td>[exemple]</td><td>—</td><td><a>PV tachygraphe.pdf</a></td></tr><tr><td>Limiteur</td><td>${v.lim}</td><td>[exemple]</td><td>—</td><td><a>Attestation limiteur.pdf</a></td></tr>`:''}</table>
+   <div class="new"><span class="chip" style="margin:0 0 6px 0;display:inline-block">Nouveau</span><span class="note">Une ligne se corrige (date, PV) au lieu d'être supprimée ; la correction est tracée dans l'Historique.</span></div>`;
+  } else if(S.vtab==='docs'){
+   h += `<table><tr><th>Document</th><th>Ajouté le</th><th></th></tr><tr><td>Carte grise</td><td>[exemple]</td><td><a>Ouvrir</a></td></tr><tr><td>PV mines</td><td>[exemple]</td><td><a>Ouvrir</a></td></tr></table>`;
+  } else {
+   h += `<table><tr><th>Date</th><th>Quoi</th><th>Par</th></tr>${inter.filter(i=>S.placed[i.key]).map(i=>`<tr><td>16/11/2026</td><td>${i.type} planifiée ${S.placed[i.key]}</td><td>Gestionnaire de parc</td></tr>${S.fait[i.key]?`<tr><td>16/11/2026</td><td>${i.type} réalisée : ${S.fait[i.key].travaux}${S.clos[i.key]?' · déclaration traitée':''}</td><td>Gestionnaire de parc</td></tr>`:''}`).join('')}<tr><td>[exemple]</td><td>Passage mines · PV enregistré</td><td>Gestionnaire de parc</td></tr></table>`;
+  }
+  h += `</div>`;
+ } else if(S.screen==='decl'){
+  h += `<div class="band"><span class="title">Déclarations</span><span class="btn">+ Ajouter</span></div><div class="content"><table><tr><th>Auteur</th><th>Urgence</th><th>Type de déclaration</th><th>Ressource concernée</th><th>Création</th><th>Description</th><th>Photo</th><th>Statut</th><th>Événements</th><th></th></tr>`;
+  raw.forEach(r=>{
+   const pl=S.placed[r.id], cr=S.created[r.id];
+   const st = S.clos[r.id]? badge(C.grn,'Traitée') : (pl? badge(C.blu,'En cours de traitement') : badge(C.gry,'En attente de traitement'));
+   const ev = S.fait[r.id]? badge(C.grn,'1 · réalisé le 16/11/2026') : pl? badge(C.grn,'1 · planifié '+pl) : (cr? badge(C.org,'1 · en attente de planning') : badge(C.red,'0'));
+   h += `<tr><td>Chauffeur</td><td>${badge(C.org,'Urgence moderée')}</td><td>${r.type}</td><td>${lienPlaque(r.plaque)}</td><td>${r.date}</td><td>${r.desc}</td><td>${r.photo}</td><td>${st}</td><td>${ev}</td><td><a data-a="menu:${r.id}" style="font-size:16px;font-weight:700">⋮</a>`;
+   if(S.menu===r.id) h += `<div class="menu"><span>Modifier le statut</span><span>Reclasser l'urgence</span><span>Planifier un évènement pour la ressource</span><a class="newitem" data-a="creer:${r.id}">Créer l'intervention (en attente de planning)<span class="chip">Nouveau</span></a></div>`;
+   h += `</td></tr>`;
+  });
+  h += `</table><span class="note">1 à ${raw.length} / ${nb} · menu ⋮ au bout de chaque ligne</span></div>`;
+ } else {
+  h += `<div class="band" style="justify-content:flex-start;gap:10px"><span class="title">Planning</span></div><div class="content">
+  <div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;gap:6px"><span class="btn">‹</span><span class="btn">›</span><span class="btn" style="background:#6FDDB5">Aujourd'hui</span>${(()=>{ const n=aEnvoyer().length; return n?`<a class="btn" data-a="envoyerTout" style="background:var(--blu);margin-left:10px">✉ Envoyer (${n})</a>`:`<span class="btn" style="background:#DDE3E1;color:#666;margin-left:10px">✉ Rien à envoyer</span>`; })()}</div><span style="font-size:18px">lundi 16 novembre 2026</span><div style="display:flex;gap:6px"><span class="btn">Jour</span><span class="btn" style="background:var(--gd)">Par intervenant</span><span class="btn">Semaine</span><span class="btn">Mois</span></div></div>
+  <div class="new"><span class="chip" style="margin:0 0 8px 0;display:inline-block">Nouveau · vue par intervenant : pointage, temps hors mécanique, tâches sans véhicule</span>`;
+  if(S.picked) h += `<div style="background:#F2F5FF;border:1px solid var(--blu);color:var(--blu);border-radius:8px;padding:8px 12px;margin-bottom:8px;font-weight:600">Choisis le créneau : clique sur l'heure voulue dans la colonne de l'intervenant (interne ou garage) · <a data-a="unpick">annuler</a></div>`;
+  h += `<div class="grid"><div class="hours"><div style="height:58px;border-bottom:1px solid #DADADA"></div>${['08 h','09 h','10 h','11 h','12 h','13 h','14 h','15 h','16 h'].map(x=>`<div>${x}</div>`).join('')}</div>`;
+  Object.entries(cols).forEach(([k,c])=>{
+   let b = c.base.map(x=>bloc(x[0]*H,x[1]*H,x[2],x[3],x[4])).join('');
+   Object.entries(S.slot).forEach(([id,s])=>{ if(s.k!==k) return; const it=allMap[id]; if(!it) return; const ok=!!S.envoye[id], fini=!!S.fait[id], marque = fini ? `<span class="vx v" title="Réalisé">✔</span>` : it.kind!=='veh' ? '' : `<span class="vx ${ok?'v':'x'}" title="${ok?'Mail envoyé':(S.renvoi[id]?'Modifié : mail à renvoyer':'Mail pas encore envoyé')}">${ok?'✓':'✗'}</span>`;
+    b += bloc(s.i*H, s.d*H, fini?'#9BB5AA':couleur(it), (it.plaque==='—'?'':it.plaque+' · ')+it.comm, hh(s.i)+' – '+hh(s.i+s.d)+(fini?' · réalisé':(S.renvoi[id]&&!ok?' · modifié':''))).replace('class="bloc"', `data-a="bloc:${id}" class="bloc${marque?' am':''}"`).replace(/<\/div>$/, marque+'</div>'); });
+   if(S.picked){ const it=allMap[S.picked], d=(it&&it.dur)||1, o=occupe(k);
+    for(let i=0;i+d<=9;i++){ if(o.some(([a,z])=> i<z && i+d>a)) continue; b += `<a class="slot" data-a="drop:${k}:${i}" style="top:${i*H}px">${hh(i)}</a>`; } }
+   h += `<div class="col"><div class="colh"><b>${c.nom}</b>${c.pt?`<span class="pt">${c.pt}</span>`:''}</div><div class="colbody">${b}</div></div>`;
+  });
+  h += `</div><div class="legend" style="margin-top:8px"><span><i style="background:#0AC786"></i>intervention véhicule</span><span><i style="background:#B86A12"></i>préparation mines</span><span><i style="background:#7A8A86"></i>hors mécanique (RDV, administratif, congé)</span><span><i style="background:#5B6CC9"></i>tâche sans véhicule</span><span><i style="background:#FFF3DC;border:1px solid #8A5300"></i>pointage</span><span><b style="color:#12B312">✓</b> mail envoyé</span><span><b style="color:#D64E5A">✗</b> mail pas encore envoyé</span><span><i style="background:#9BB5AA"></i>réalisé</span></div></div></div>`;
+  const list = all.filter(i=>!S.placed[i.key]);
+  if(S.drawer){
+   h += `<div class="drawer"><div style="display:flex;justify-content:space-between;align-items:center"><a data-a="drawer" style="font-size:18px;color:var(--txt)">›</a><b style="font-size:16px;color:var(--g)">Interventions en attente de planning</b><a class="btn" data-a="tache">+ Ajouter</a></div><div class="new" style="display:flex;flex-direction:column;gap:8px"><span class="chip" style="margin:0;align-self:flex-start">Nouveau · déclaration liée, peut rouler, où, dispo</span>`;
+   list.forEach(i=>{
+    const rb = i.rouler==='Non'?C.red:(i.rouler==='Oui'?C.grn:(i.rouler==='—'?'#DDE3E1':C.org));
+    const db = i.dispo.indexOf('Dispo')===0?C.grn:(i.dispo==='Pas de véhicule'?'#5B6CC9':C.org);
+    h += `<div class="card ${S.picked===i.key?'sel':''}"><div style="display:flex;justify-content:space-between"><b>${i.type} · ${lienPlaque(i.plaque)}</b><span class="note">créée le ${i.cree} · ${i.duree}</span></div><span>${i.comm}</span><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">${badge(rb,'Peut rouler : '+i.rouler,i.rouler==='—'?'#404040':'#fff')}<span class="badge" style="background:#EEF2F1;color:#404040">Où : ${i.ou}</span>${badge(db,i.dispo)}<span style="font-size:10px;color:var(--blu)">${i.decl}</span></div><div style="text-align:right"><a class="btn" data-a="pick:${i.key}" style="padding:5px 12px">Placer</a></div></div>`;
+   });
+   if(!list.length) h += `<span class="note">Aucune intervention en attente.</span>`;
+   h += `</div><span class="note">Dans le vrai logiciel : glisser la carte sur l'heure voulue chez l'intervenant. Ici : « Placer » puis cliquer le créneau.</span></div>`;
+  } else h += `<a class="tab" data-a="drawer">‹ Interventions (${list.length})</a>`;
+ }
+ h += `</div></div>`;
+ if(S.modal==='creer'){ const r=byId[S.cur];
+  h += `<div class="overlay"><div class="modal"><b style="font-size:18px;color:var(--g)">Créer l'intervention</b><span class="note">Rempli depuis la déclaration · rien à retaper</span>
+  <div class="row"><div class="f"><span class="lbl">Ressource matérielle</span><span class="field">${r.plaque}</span></div><div class="f"><span class="lbl">Type</span><div style="display:flex;gap:4px"><a class="opt ${S.typeInt==='rapide'?'on':''}" data-a="type:rapide">Intervention rapide</a><a class="opt ${S.typeInt==='immo'?'on':''}" data-a="type:immo">Intervention immo</a></div></div></div>
+  <div class="f"><span class="lbl">Commentaire (description du chauffeur)</span><span class="field">${r.desc}</span></div>
+  <div class="row"><div class="f"><span class="lbl">Durée estimée</span><span class="field">01:00</span></div><div class="f"><span class="lbl">Photo</span><span class="field">${r.photo==='Oui'?'Jointe (reprise)':'Aucune'}</span></div><div class="f"><span class="lbl">Peut rouler ?</span><span class="field">${r.rouler}</span></div></div>
+  <span class="note">À la validation : l'intervention part dans le volet « Interventions » du planning. La déclaration affiche le lien ; elle passe « En cours de traitement » à la mise au planning.</span>
+  <div style="display:flex;justify-content:flex-end;gap:8px"><a class="btn2" data-a="close">Annuler</a><a class="btn" data-a="valider">Valider</a></div></div></div>`; }
+ if(S.modal==='tache'){ const F=S.form, T=S.ajType;
+  const tabs = [['veh','Intervention sur un véhicule','#0AC786'],['tache','Tâche sans véhicule','#5B6CC9'],['hors','Hors mécanique','#7A8A86']].map(([v,l,c])=>`<a class="opt ${T===v?'on':''}" data-a="ajtype:${v}" style="${T===v?`background:${c};border-color:${c}`:''}">${l}</a>`).join('');
+  const sel = (f,opts)=>`<select class="field" data-f="${f}">${opts.map(o=>`<option ${F[f]===o?'selected':''}>${o}</option>`).join('')}</select>`;
+  const opts = (f,list)=>`<div style="display:flex;gap:4px;flex-wrap:wrap">${list.map(o=>`<a class="opt ${(F[f]||list[0])===o?'on':''}" data-a="fopt:${f}:${o}">${o}</a>`).join('')}</div>`;
+  let corps='';
+  if(T==='veh') corps = `<span class="note">Sans déclaration : prépa mines, entretien, panne vue à l'atelier… Même circuit qu'une déclaration.</span>
+   <div class="row"><div class="f"><span class="lbl">Ressource matérielle *</span><input class="field" data-f="plaque" list="plaques" placeholder="Immatriculation" value="${F.plaque||''}"><datalist id="plaques"><option>XX544MN</option><option>XX322GT</option><option>XX507LO</option><option>XX137BY</option><option>XX618OL</option><option>XX396IR</option></datalist></div>
+   <div class="f"><span class="lbl">Type</span>${opts('type',['Intervention rapide','Intervention immo','Préparation mines','Entretien'])}</div></div>
+   <div class="f"><span class="lbl">Commentaire *</span><input class="field" data-f="comm" placeholder="Travail à faire" value="${F.comm||''}"></div>
+   <div class="row"><div class="f"><span class="lbl">Durée estimée</span>${sel('duree',['01:00','00:30','02:00','04:00'])}</div><div class="f"><span class="lbl">Peut rouler ?</span>${opts('rouler',['Oui','Non'])}</div><div class="f"><span class="lbl">Où est le véhicule ?</span>${sel('ou',['Site Port','Site Nord','En tournée'])}</div></div>`;
+  else if(T==='tache') corps = `<div class="row"><div class="f"><span class="lbl">Tâche</span>${sel('tache',['Aller chercher des pièces','Rangement atelier','Outillage','Nettoyage'])}</div><div class="f"><span class="lbl">Durée</span>${sel('duree',['01:00','00:30','02:00','04:00'])}</div></div>
+   <div class="f"><span class="lbl">Ressource matérielle</span><span class="field" style="color:#999">aucune — pas obligatoire</span></div>`;
+  else corps = `<div class="row"><div class="f"><span class="lbl">Motif</span>${sel('hors',['Administratif','Rendez-vous','Formation','Départ plus tôt'])}</div><div class="f"><span class="lbl">Durée</span>${sel('duree',['01:00','00:30','02:00','04:00'])}</div></div>
+   <span class="note">Le mécanicien apparaît occupé sur le planning. Pas de véhicule, pas de mail.</span>`;
+  const manque = T==='veh' && (!(F.plaque||'').trim() || !(F.comm||'').trim());
+  h += `<div class="overlay"><div class="modal"><b style="font-size:18px;color:var(--g)">Ajouter</b><div style="display:flex;gap:6px;flex-wrap:wrap">${tabs}</div>${corps}
+  ${manque?'<span class="note" style="color:var(--red)">* Immatriculation et commentaire obligatoires</span>':''}
+  <div style="display:flex;justify-content:flex-end;gap:8px"><a class="btn2" data-a="close">Annuler</a><a class="btn" data-a="validerTache" style="${manque?'opacity:.45;pointer-events:none':''}">Ajouter aux interventions en attente</a></div></div></div>`; }
+ if(S.modal==='bloc'){ const id=S.blocId, it=allMap[id], s=S.slot[id], c=cols[s.k], fini=S.fait[id], peutFinir = it.kind!=='veh' || S.envoye[id];
+  h += `<div class="overlay"><div class="modal"><b style="font-size:18px;color:var(--g)">${it.plaque==='—'?'':it.plaque+' · '}${it.type}</b><span>${it.comm}</span>
+  <span class="note">${c.nom} · ${hh(s.i)} – ${hh(s.i+s.d)}${fini?' · réalisé : '+fini.travaux:(it.kind==='veh'?' · '+(S.envoye[id]?'mail envoyé':(S.renvoi[id]?'modifié, mail à renvoyer':'mail pas encore envoyé')):'')}</span>
+  ${fini?`<div style="display:flex;justify-content:flex-end"><a class="btn2" data-a="close">Fermer</a></div>`:`
+  <div class="new" style="display:flex;flex-direction:column;gap:6px"><span class="chip" style="margin:0;align-self:flex-start">Nouveau · état de réalisation</span>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">${peutFinir?`<a class="btn" data-a="fin:${id}">✔ Réalisé</a><a class="btn2" data-a="pasfini:${id}">Pas terminé · à replanifier</a>`:`<span class="note">Envoyer le mail avant de passer l'intervention en réalisé.</span>`}</div></div>
+  <div style="display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap"><a class="btn2" data-a="close">Fermer</a><a class="btn2" data-a="retirer:${id}">Retirer du planning</a><a class="btn2" data-a="deplacer:${id}">Changer l'heure ou l'intervenant</a>${it.kind==='veh'&&!S.envoye[id]?`<a class="btn" data-a="envoyer:${id}">✉ Envoyer</a>`:''}</div>`}</div></div>`; }
+ if(S.modal==='fin'){ const id=S.blocId, it=allMap[id], decl=!!byId[id];
+  h += `<div class="overlay"><div class="modal"><b style="font-size:18px;color:var(--g)">Intervention réalisée · ${it.plaque==='—'?'':it.plaque}</b><span class="note">${it.type} · ${it.comm}</span>
+  <div class="f"><span class="lbl">Travaux réalisés *</span><input class="field" data-f="travaux" placeholder="Ce qui a été fait" value="${S.form.travaux||''}"></div>
+  ${decl?`<label class="switch" style="font-size:12px;color:var(--txt)"><input type="checkbox" data-f="cloturer" ${S.form.cloturer==='non'?'':'checked'}> Passer la déclaration du chauffeur en « Traitée »</label>`:''}
+  <span class="note">L'état de réalisation existe déjà dans RM : il suffit qu'il clôture aussi la déclaration liée.</span>
+  <div style="display:flex;justify-content:flex-end;gap:8px"><a class="btn2" data-a="bloc:${id}">Retour</a><a class="btn" data-a="validerFin" ${(S.form.travaux||'').trim()?'':'style="opacity:.45;pointer-events:none"'}>Valider</a></div></div></div>`; }
+ if(S.modal==='pasfini'){ const id=S.blocId, it=allMap[id];
+  h += `<div class="overlay"><div class="modal"><b style="font-size:18px;color:var(--g)">Pas terminé · ${it.plaque==='—'?'':it.plaque}</b>
+  <div class="f"><span class="lbl">Pourquoi ? *</span>${['Pièce manquante','Véhicule reparti','Plus long que prévu','Autre'].map(o=>`<a class="opt ${S.form.motif===o?'on':''}" data-a="fopt:motif:${o}" style="margin:2px 4px 2px 0;display:inline-block">${o}</a>`).join('')}</div>
+  <span class="note">L'intervention revient dans les interventions en attente, avec le motif. La déclaration reste « En cours de traitement ».</span>
+  <div style="display:flex;justify-content:flex-end;gap:8px"><a class="btn2" data-a="bloc:${id}">Retour</a><a class="btn" data-a="validerPasFini" ${S.form.motif?'':'style="opacity:.45;pointer-events:none"'}>Valider</a></div></div></div>`; }
+ if(S.modal==='mail'){
+  const mails = S.mailIds.map(id=>{ const it=allMap[id], s=S.slot[id], c=cols[s.k], garage=s.k==='g', modif=!!S.renvoi[id];
+   return `<div class="mailbox"><b>À :</b> contact@exemple-transports.fr<br><b>Cc :</b> exploitants du pôle du véhicule · chauffeur attitré${garage?' · garage':''} <span class="note">(remplis selon le pôle, modifiables)</span><br><b>Objet :</b> ${modif?'Événement modifié pour':'Nouvel événement créé pour'} ${it.plaque}<hr style="border:none;border-top:1px solid #E5E5E5">Type : ${it.type}<br>Ressources matérielles : ${it.plaque}<br>Date de début : 16/11/2026 ${hh(s.i).replace('h',':')}<br>Date de fin : 16/11/2026 ${hh(s.i+s.d).replace('h',':')}<br>Intervenant : ${c.nom}<br>Commentaire : ${it.comm}</div>`; }).join('');
+  h += `<div class="overlay"><div class="modal" style="width:640px;max-height:86vh;overflow-y:auto"><b style="font-size:18px;color:var(--g)">Envoyer ${S.mailIds.length>1?S.mailIds.length+' mails':'le mail'}</b>
+  ${mails}
+  <span class="note">Même mail qu'aujourd'hui dans RM, mais il s'ouvre dans Gmail : il est dans les envoyés et les réponses reviennent dans Gmail.</span>
+  <div style="display:flex;justify-content:flex-end;gap:8px"><a class="btn2" data-a="close">Plus tard</a><a class="btn" data-a="validerMail">Ouvrir dans Gmail</a></div></div></div>`; }
+ if(S.toast) h += `<div class="toast">${S.toast}</div>`;
+ document.getElementById('app').innerHTML = h;
+}
+document.addEventListener('click', e=>{
+ const el = e.target.closest('[data-a]'); if(!el) return;
+ const [a,v,w] = el.dataset.a.split(':'); e.preventDefault && el.tagName!=='INPUT' && e.preventDefault();
+ if(a==='go') set({screen:v,menu:null,toast:''});
+ else if(a==='menu') set({menu:S.menu===v?null:v});
+ else if(a==='creer') set({menu:null,modal:'creer',cur:v,toast:'',typeInt:'rapide'});
+ else if(a==='type') set({typeInt:v});
+ else if(a==='close') set({modal:null});
+ else if(a==='valider'){ S.created[S.cur]= S.typeInt==='immo'?'Intervention immo':'Intervention rapide'; set({modal:null,toast:'Intervention créée · en attente dans le volet « Interventions » du planning'}); }
+ else if(a==='tache') set({modal:'tache',toast:'',ajType:'veh',form:{}});
+ else if(a==='veh') set({screen:'veh',veh:v,vtab:'suivi',menu:null,modal:null,picked:null,toast:''});
+ else if(a==='vtab') set({vtab:v});
+ else if(a==='creerVeh') set({modal:'tache',toast:'',ajType:'veh',form:{plaque:S.veh}});
+ else if(a==='placerVeh') set({screen:'planning',picked:v,drawer:false,toast:''});
+ else if(a==='ajtype') set({ajType:v,form:{}});
+ else if(a==='fopt'){ S.form[v]=w; render(); }
+ else if(a==='validerTache'){ const F=S.form, T=S.ajType, n=S.extra.length+1, du=F.duree||'01:00', d=({'00:30':0.5,'01:00':1,'02:00':2,'04:00':4})[du];
+   if(T==='veh') S.extra.push({key:'v'+n,kind:'veh',dur:d,type:F.type||'Intervention rapide',plaque:(F.plaque||'').toUpperCase().replace(/\s|-/g,''),cree:'16/11/2026',duree:du,comm:F.comm,rouler:F.rouler||'Oui',ou:F.ou||'Site Port',dispo:(F.ou||'Site Port')==='En tournée'?'Retour [date]':"Dispo aujourd'hui",decl:'saisie sans déclaration'});
+   else if(T==='tache') S.extra.push({key:'t'+n,kind:'tache',dur:d,type:'Tâche sans véhicule',plaque:'—',cree:'16/11/2026',duree:du,comm:F.tache||'Aller chercher des pièces',rouler:'—',ou:'—',dispo:'Pas de véhicule',decl:''});
+   else S.extra.push({key:'h'+n,kind:'hors',dur:d,type:'Hors mécanique',plaque:'—',cree:'16/11/2026',duree:du,comm:F.hors||'Administratif',rouler:'—',ou:'—',dispo:'Pas de véhicule',decl:''});
+   set({modal:null,drawer:true,toast:'Ajouté aux interventions en attente'}); }
+ else if(a==='drawer') set({drawer:!S.drawer});
+ else if(a==='pick') set({picked:v,drawer:false,toast:''});
+ else if(a==='unpick'){ if(S.depl){ S.slot[S.depl.id]=S.depl.slot; S.placed[S.depl.id]=S.depl.placed; } set({picked:null,depl:null,drawer:!S.depl}); }
+ else if(a==='drop'){ const all=Object.fromEntries(intervList().map(i=>[i.key,i])), it=all[S.picked], id=S.picked, d=(it&&it.dur)||1;
+   S.slot[id]={k:v,i:+w,d}; S.placed[id]=hh(+w)+' · '+cols[v].nom; const isDecl=!!byId[id];
+   if(S.envoye[id]){ S.envoye[id]=false; S.renvoi[id]=true; } S.depl=null;
+   set({picked:null,toast:'Placé · '+cols[v].nom+' à '+hh(+w)+(it.kind==='veh'?(S.renvoi[id]?' · modifié : à renvoyer avec « Envoyer »':' · à envoyer quand le planning est prêt (bouton « Envoyer »)'):'')+(isDecl?' · déclaration « En cours de traitement »':'')}); }
+ else if(a==='bloc') set({modal:'bloc',blocId:v,toast:''});
+ else if(a==='fin') set({modal:'fin',blocId:v,form:{travaux:''}});
+ else if(a==='pasfini') set({modal:'pasfini',blocId:v,form:{}});
+ else if(a==='validerFin'){ const id=S.blocId, decl=!!byId[id]; S.fait[id]={travaux:S.form.travaux.trim()}; if(decl && S.form.cloturer!=='non') S.clos[id]=true; delete S.replan[id];
+   set({modal:null,toast:'Intervention réalisée'+(S.clos[id]?' · déclaration « Traitée » (elle sort de la liste à traiter)':'')}); }
+ else if(a==='validerPasFini'){ const id=S.blocId; S.replan[id]=S.form.motif; delete S.slot[id]; delete S.placed[id]; delete S.envoye[id]; delete S.renvoi[id];
+   set({modal:null,drawer:true,toast:'Pas terminé ('+S.form.motif+') · de retour dans les interventions en attente'}); }
+ else if(a==='deplacer'){ S.depl={id:v,slot:S.slot[v],placed:S.placed[v]}; delete S.slot[v]; delete S.placed[v]; set({modal:null,picked:v,drawer:false,toast:''}); }
+ else if(a==='retirer'){ delete S.slot[v]; delete S.placed[v]; delete S.envoye[v]; delete S.renvoi[v]; set({modal:null,drawer:true,toast:'Retiré du planning · de retour dans les interventions en attente'}); }
+ else if(a==='envoyer') set({modal:'mail',mailIds:[v]});
+ else if(a==='envoyerTout') set({modal:'mail',mailIds:aEnvoyer()});
+ else if(a==='validerMail'){ const n=S.mailIds.length; S.mailIds.forEach(id=>{ S.envoye[id]=true; delete S.renvoi[id]; }); set({modal:null,mailIds:[],toast:(n>1?n+' mails prêts':'Mail prêt')+' dans Gmail · il reste à cliquer Envoyer'}); }
+ else if(a==='plain'){ document.body.classList.toggle('plain', !el.checked); }
+});
+document.addEventListener('input', e=>{ const f=e.target.dataset && e.target.dataset.f; if(f){ S.form[f]=e.target.value; if(f==='plaque'||f==='comm'){ const ok=!(S.ajType==='veh' && (!(S.form.plaque||'').trim()||!(S.form.comm||'').trim())); const b=document.querySelector('[data-a=validerTache]'); if(b){ b.style.opacity=ok?'':'.45'; b.style.pointerEvents=ok?'':'none'; } } } });
+document.addEventListener('change', e=>{ const f=e.target.dataset && e.target.dataset.f; if(!f) return; S.form[f] = e.target.type==='checkbox' ? (e.target.checked?'oui':'non') : e.target.value; });
+document.addEventListener('input', e=>{ if(e.target.dataset && e.target.dataset.f==='travaux'){ const b=document.querySelector('[data-a=validerFin]'); if(b){ const ok=!!e.target.value.trim(); b.style.opacity=ok?'':'.45'; b.style.pointerEvents=ok?'':'none'; } } });
+render();
+</script>
+</body>
+</html>

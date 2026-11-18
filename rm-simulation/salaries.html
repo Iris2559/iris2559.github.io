@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RM amélioré — salariés</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g:#0AC786;--gd:#07905f;--mint:#E8FBF4;--txt:#404040;--red:#D64E5A;--org:#F2A62C;--blu:#1239D9;--gry:#B5B5B5}
+*{box-sizing:border-box}
+body{margin:0;font-family:Poppins,"Segoe UI",Arial,sans-serif;color:var(--txt);background:#fff;font-size:12px}
+a{color:var(--g);cursor:pointer;text-decoration:none}
+.app{display:flex;min-height:100vh}
+.side{width:210px;flex-shrink:0;background:#F8F9FB;display:flex;flex-direction:column;padding:18px 16px;gap:4px}
+.logo{font-size:28px;font-weight:800;color:#1E2A26;letter-spacing:-1px;line-height:1}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-radius:12px;font-size:12px;color:var(--txt)}
+.nav.on{background:var(--g);color:#fff}
+.nav.sub{padding-left:24px;font-size:11.5px}
+.sec{font-size:11px;font-weight:600;color:#1E2A26;margin:10px 0 4px}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.top{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 30px}
+.user{display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.band{background:var(--mint);padding:16px 36px;display:flex;justify-content:space-between;align-items:center}
+.title{font-size:24px;font-weight:800;color:var(--g)}
+.content{padding:18px 36px;display:flex;flex-direction:column;gap:12px}
+.btn{background:var(--g);color:#fff;border-radius:12px;padding:9px 16px;font-weight:600;display:inline-block;white-space:nowrap}
+.btns{border:1px solid var(--g);color:var(--g);border-radius:10px;padding:4px 10px;font-weight:600;font-size:11px;white-space:nowrap}
+.btnsf{background:var(--g);color:#fff;border-radius:10px;padding:5px 10px;font-weight:600;font-size:11px;white-space:nowrap}
+.btn2{border:1px solid var(--org);color:#E08A00;border-radius:10px;padding:8px 16px;font-weight:600}
+.badge{color:#fff;border-radius:700px;padding:2px 8px;font-size:10px;font-weight:600;white-space:nowrap;display:inline-block}
+.pill{border-radius:700px;font-size:10px;font-weight:600;padding:1px 8px;background:var(--red);color:#fff}
+table{border-collapse:collapse;width:100%}
+th{font-size:10px;font-weight:600;color:#000;text-align:left;padding:10px 8px;text-transform:uppercase;background:var(--mint)}
+td{font-size:12px;color:#000;padding:10px 8px;border-top:1px solid #EFEFEF;vertical-align:middle}
+.new{border:2px dashed #F59E0B;border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:10px}
+.chip{background:#F59E0B;color:#1F1300;border-radius:700px;padding:1px 8px;font-size:10px;font-weight:700;align-self:flex-start}
+body.plain .new{border:none;padding:0}body.plain .chip{display:none}
+.tabs{display:flex;gap:4px}.tabs a{padding:6px 10px;border-radius:4px;font-size:11px;color:var(--txt)}.tabs a.on{background:#11825A;color:#fff;font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.kpi{border:1px solid #E3E3E3;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:2px}
+.kpi b{font-size:28px;font-weight:800}
+.box{border:1px solid #DADADA;border-radius:8px;padding:12px 16px;display:flex;flex-direction:column;gap:10px}
+.boxt{font-size:15px;color:var(--g)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.lbl{font-size:10px;font-weight:600;color:var(--g);background:var(--mint);border-radius:4px;padding:1px 6px;align-self:flex-start}
+.kv{display:flex;flex-direction:column;gap:2px}
+.overlay{position:fixed;inset:0;background:rgba(20,30,28,.45);display:flex;align-items:center;justify-content:center;z-index:20}
+.modal{width:560px;background:#fff;border-radius:14px;padding:22px 26px;display:flex;flex-direction:column;gap:10px}
+.field{border:1px solid #DADADA;border-radius:8px;padding:8px 10px;font:inherit;width:100%}
+select.field,input.field,textarea.field{background:#fff}
+.row{display:flex;gap:10px}.f{flex:1;display:flex;flex-direction:column;gap:3px}
+.opt{border:1px solid #DADADA;border-radius:8px;padding:6px 10px}.opt.on{background:var(--g);color:#fff;border-color:var(--g);font-weight:600}
+.toast{position:fixed;left:240px;bottom:24px;background:var(--g);color:#fff;border-radius:12px;padding:12px 18px;font-weight:600;box-shadow:0 4px 14px rgba(0,0,0,.18);z-index:30;max-width:900px}
+.note{font-size:11px;color:#666}
+.gm{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:#B3261E;background:#FCE8E6;border-radius:700px;padding:1px 8px}
+.switch{font-size:11px;color:#555;display:flex;gap:6px;align-items:center}
+.steps{display:flex;gap:6px;align-items:center;font-size:10px}
+.steps span{border-radius:700px;padding:1px 8px;background:#EEF2F1;color:#666}
+.steps span.ok{background:#DDF6EC;color:#0B7A55;font-weight:600}
+.steps span.cur{background:#FFEBD6;color:#B85C00;font-weight:600}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const S = { screen: (['#demandes','#pointage','#releve'].includes(location.hash)?location.hash.slice(1):'liste'), fiche:'m1', modal:null, toast:'', filtre:'Tous', dem:{}, newDem:[], pt:{}, f:{type:'Congé', duree:'Journée', motif:''} };
+const B = (bg,t,c)=>`<span class="badge" style="background:${bg};color:${c||'#fff'}">${t}</span>`;
+const C={gry:'#B5B5B5',blu:'#1239D9',grn:'#12B312',red:'#D64E5A',org:'#F2A62C'};
+const GM = '<span class="gm">✉ Gmail</span>';
+const sal = [
+ {id:'m1', fn:'Référent mécanicien PL', equipe:'Atelier', site:'Site Nord', resp:'Responsable du parc', cg:18.5, rc:6, arr:'07:32', dep:'', ech:[['Visite médicale','12/03/2027',C.grn],['Permis C','05/2031',C.grn]]},
+ {id:'m2', fn:'Mécanicien PL 2', equipe:'Atelier', site:'Site Port', resp:'Référent mécanicien PL', cg:11, rc:2.5, arr:'07:45', dep:'', ech:[['Visite médicale','02/12/2026',C.org]]},
+ {id:'m3', fn:'Mécanicien PL 3', equipe:'Atelier', site:'Site Nord', resp:'Référent mécanicien PL', cg:7, rc:0, arr:'07:58', dep:'', ech:[['Visite médicale','18/06/2027',C.grn]]},
+ {id:'m4', fn:'Mécanicien pneus', equipe:'Atelier', site:'Site Nord', resp:'Référent mécanicien PL', cg:4.2, rc:0, arr:'', dep:'', ech:[['Visite médicale','[à saisir]',C.gry]], note:'arrivé le 01/09/2026'},
+ {id:'c1', fn:'Chauffeur conteneur 1', equipe:'Exploitation conteneur', site:'Site Port', resp:'Exploitant conteneur', cg:22, rc:0, arr:'05:10', dep:'', ech:[['Carte conducteur','04/12/2026',C.org],['FCO','09/2028',C.grn],['Visite médicale','30/11/2026',C.red],['ADR','03/2029',C.grn]]},
+ {id:'c2', fn:'Chauffeur conventionnel 1', equipe:'Exploitation conventionnel', site:'Site Port', resp:'Exploitant conventionnel', cg:15, rc:0, arr:'06:02', dep:'', ech:[['Permis CE','11/2034',C.grn],['FCO','01/2027',C.org],['Carte conducteur','07/2028',C.grn],['Visite médicale','05/2027',C.grn]]}
+];
+const byId=Object.fromEntries(sal.map(s=>[s.id,s]));
+const baseDem = [
+ {id:'d1', who:'m2', type:'Congé', quand:'du 22 au 24/12/2026 · 3 jours', motif:'', st:0},
+ {id:'d2', who:'m3', type:'Hors mécanique · rendez-vous', quand:'18/11/2026 · 15:00 – 17:00', motif:'rendez-vous personnel, départ plus tôt', st:1},
+ {id:'d3', who:'m1', type:'Heures supp', quand:'14/11/2026 · 2 h', motif:'dépannage astreinte XX581NM', st:0},
+ {id:'d4', who:'c1', type:'RC', quand:'27/11/2026 · journée', motif:'', st:0}
+];
+const steps=['Responsable d\'équipe','RH','Réponse envoyée'];
+function demList(){ return baseDem.concat(S.newDem).map(d=>Object.assign({},d,{st: S.dem[d.id]!==undefined?S.dem[d.id]:d.st})); }
+function set(p){ Object.assign(S,p); render(); }
+function stepsHtml(st){ return `<div class="steps">${steps.map((s,i)=>`<span class="${i<st?'ok':(i===st?'cur':'')}">${i<st?'✓ ':''}${s}</span>`).join('→')}</div>`; }
+function nav(k,l,extra){ return `<a class="nav ${extra||''} ${S.screen===k?'on':''}" data-a="go:${k}">${l}</a>`; }
+function render(){
+ const D=demList(); const att=D.filter(d=>d.st<2).length;
+ let h=`<div class="app"><div class="side"><div style="margin-bottom:14px"><div class="logo">RM</div><div style="font-size:11px">ressources matérielles</div></div><div style="height:30px;border:1px solid #DADADA;border-radius:8px;background:#fff;margin-bottom:18px"></div>
+ <div class="sec">Société</div><span class="nav">Véhicules</span><span class="nav">Ressources matérielles</span><span class="nav">Contrats</span><span class="nav">Contrôles réglementaires</span><a class="nav" href="index.html#planning">Planning</a><a class="nav" href="index.html">Déclarations <span class="pill">179</span></a>
+ <div class="sec">Salariés <span class="chip" style="margin-left:6px">Nouveau</span></div>
+ ${nav('liste','Salariés','sub')}${nav('demandes','Demandes <span class="pill">'+att+'</span>','sub')}${nav('pointage','Pointage du jour','sub')}${nav('releve','Relevé du mois','sub')}
+ <div class="sec">Général</div><span class="nav">Accueil</span><span class="nav" style="color:#9AA3A0">Paramètres</span>
+ <label class="switch" style="margin-top:16px"><input type="checkbox" data-a="plain" ${document.body.classList.contains('plain')?'':'checked'}> Montrer les nouveautés</label>
+ <span style="margin-top:auto;font-size:11px;text-align:center">Simulation — données fictives</span></div>
+ <div class="main"><div class="top"><span style="font-size:20px">☰</span><div style="display:flex;align-items:center;gap:20px"><b>16 novembre 2026</b><div class="user"><b>Responsable du parc</b></div></div></div>`;
+
+ if(S.screen==='liste'){
+  const fl=['Tous','Atelier','Exploitation conteneur','Exploitation conventionnel'];
+  const L=sal.filter(s=>S.filtre==='Tous'||s.equipe===S.filtre);
+  h+=`<div class="band"><span class="title">Salariés</span><span class="btn">+ Ajouter</span></div><div class="content">
+  <div class="new"><span class="chip">Nouveau · les salariés à part des garages et des services (qui restent « Intervenants »)</span>
+  <div style="display:flex;gap:8px">${fl.map(x=>`<a class="${S.filtre===x?'btnsf':'btns'}" data-a="filtre:${x}">${x}</a>`).join('')}</div>
+  <table><tr><th>Fonction</th><th>Équipe</th><th>Site</th><th>Présent aujourd'hui</th><th>Congés (j)</th><th>RC (h)</th><th>Prochaine échéance</th><th></th></tr>`;
+  L.forEach(s=>{ const pres = s.arr? B(C.grn,'Oui · '+s.arr) : B(C.red,'Pas pointé'); const e=s.ech.slice().sort((a,b)=>({'#D64E5A':0,'#F2A62C':1,'#B5B5B5':2,'#12B312':3}[a[2]]-({'#D64E5A':0,'#F2A62C':1,'#B5B5B5':2,'#12B312':3}[b[2]])))[0];
+   h+=`<tr><td><a data-a="fiche:${s.id}" style="font-weight:600">${s.fn}</a>${s.note?`<div class="note">${s.note}</div>`:''}</td><td>${s.equipe}</td><td>${s.site}</td><td>${pres}</td><td>${s.cg}</td><td>${s.rc}</td><td>${B(e[2],e[0]+' · '+e[1])}</td><td><a class="btns" data-a="fiche:${s.id}">Fiche</a></td></tr>`; });
+  h+=`</table></div><span class="note">Paramètres › Intervenants : il ne reste que les garages et prestataires extérieurs. Les natures « Congés », « Astreinte », « Accident de travail », « Heures supplémentaires » ne sont plus rattachées aux véhicules.</span></div>`;
+ }
+ if(S.screen==='fiche'){ const s=byId[S.fiche];
+  h+=`<div class="band" style="flex-direction:column;align-items:flex-start;gap:10px"><div style="display:flex;align-items:center;gap:10px"><a data-a="go:liste" style="width:22px;height:22px;border-radius:50%;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center">←</a><span class="title" style="font-size:22px">${s.fn}</span></div><div class="tabs"><a class="on">Fiche</a><a>Échéances</a><a>Demandes</a><a>Pointages</a><a>Documents</a></div></div><div class="content">
+  <div class="new"><span class="chip">Nouveau · fiche salarié</span><div class="grid2">
+  <div class="box"><span class="boxt">Contrat et rattachement</span><div class="grid2"><div class="kv"><span class="lbl">Équipe</span>${s.equipe}</div><div class="kv"><span class="lbl">Responsable d'équipe</span>${s.resp}</div><div class="kv"><span class="lbl">Site habituel</span>${s.site}</div><div class="kv"><span class="lbl">Contrat</span>${s.equipe==='Atelier'?'39 h / semaine · 169 h / mois':'[selon contrat chauffeur]'}</div></div></div>
+  <div class="box"><span class="boxt">Compteurs</span><div class="grid2"><div class="kv"><span class="lbl">Congés</span><b style="font-size:20px">${s.cg} j</b><span class="note">2,08 j acquis par mois · N-1 et N</span></div><div class="kv"><span class="lbl">Repos compensateur</span><b style="font-size:20px">${s.rc} h</b><span class="note">heures de présence au-delà de 152 h dans le mois</span></div></div></div>
+  </div>
+  <div class="box"><div style="display:flex;justify-content:space-between;align-items:center"><span class="boxt">Échéances</span><span class="note">alerte 30 jours avant ${GM} au salarié, à son responsable et à la RH</span></div><table><tr><th>Document</th><th>Fin de validité</th><th>Justificatif</th></tr>${s.ech.map(e=>`<tr><td>${e[0]}</td><td>${B(e[2],e[1])}</td><td>${e[2]===C.gry?'[à joindre]':'Joint'}</td></tr>`).join('')}</table></div>
+  <div style="display:flex;gap:8px"><a class="btn" data-a="nouvelle:${s.id}">+ Nouvelle demande pour ce salarié</a></div></div></div>`;
+ }
+ if(S.screen==='demandes'){
+  h+=`<div class="band"><span class="title">Demandes</span><a class="btn" data-a="nouvelle:m3">+ Nouvelle demande</a></div><div class="content">
+  <div class="new"><span class="chip">Nouveau · congés, RC, hors mécanique, heures supp — circuit responsable → RH → réponse, tout par Gmail</span>
+  <table><tr><th>Salarié</th><th>Demande</th><th>Quand</th><th>Motif</th><th>Circuit</th><th></th></tr>`;
+  D.forEach(d=>{ const s=byId[d.who]; let act='';
+   if(d.st===0) act=`<a class="btnsf" data-a="ok:${d.id}">Accord du responsable</a> <a class="btns" data-a="refus:${d.id}" style="border-color:var(--red);color:var(--red)">Refuser</a>`;
+   else if(d.st===1) act=`<a class="btnsf" data-a="ok:${d.id}">Validation RH</a>`;
+   else if(d.st===3) act=B(C.red,'Refusée · réponse envoyée');
+   else act=B(C.grn,'Accordée · sur le planning');
+   h+=`<tr><td style="font-weight:600">${s.fn}</td><td>${d.type}</td><td>${d.quand}</td><td>${d.motif||'—'}</td><td>${d.st===3?'<span class="note">refusée par le responsable</span>':stepsHtml(Math.min(d.st,2))}</td><td style="white-space:nowrap">${act}</td></tr>`; });
+  h+=`</table></div><span class="note">Chaque étape envoie un mail Gmail : au responsable d'équipe à la demande, à la RH après l'accord, puis la réponse au salarié et au responsable. L'enregistrement dans la fiche n'a lieu qu'après l'accord du responsable. Une absence accordée apparaît en gris sur le planning de l'atelier.</span></div>`;
+ }
+ if(S.screen==='pointage'){
+  const P=sal.map(s=>Object.assign({},s,S.pt[s.id]||{}));
+  const pres=P.filter(s=>s.arr).length;
+  h+=`<div class="band"><span class="title">Pointage du jour</span><span style="font-size:16px;color:var(--g)">lundi 16 novembre 2026</span></div><div class="content">
+  <div class="new"><span class="chip">Nouveau · pointage de la tablette reçu dans RM et dans RH, séparé des interventions</span>
+  <div class="cards"><div class="kpi"><span>Présents</span><b style="color:var(--g)">${pres}</b></div><div class="kpi"><span>Pas pointés</span><b style="color:var(--red)">${P.length-pres}</b></div><div class="kpi"><span>Absences accordées</span><b style="color:var(--blu)">${D.filter(d=>d.st===2).length}</b></div><div class="kpi"><span>Oublis à corriger</span><b style="color:var(--org)">${P.filter(s=>!s.arr&&!s.corr).length}</b></div></div>
+  <table><tr><th>Salarié</th><th>Site</th><th>Arrivée</th><th>Départ</th><th>Source</th><th>Envoyé à</th><th></th></tr>`;
+  P.forEach(s=>{ h+=`<tr><td style="font-weight:600">${s.fn}</td><td>${s.site}</td><td>${s.arr?s.arr:B(C.red,'Pas pointé')}</td><td>${s.dep||'—'}</td><td>${s.arr?(s.corr?'Correction manuelle':(s.equipe==='Atelier'?'Tablette atelier':'[à préciser : tablette ou AddSecure]')):'—'}</td><td>${s.arr?'RM + RH':'—'}</td><td>${s.arr?'':`<a class="btns" data-a="corr:${s.id}">Corriger (avec motif)</a>`}</td></tr>`; });
+  h+=`</table></div><span class="note">Le salarié pointe sur la tablette de l'atelier. Le pointage arrive à la fois dans RM (présents, planning des mécaniciens) et dans le logiciel RH : une seule saisie, pas de géolocalisation. Une correction se fait avec un motif, gardée dans l'historique, et envoie un mail Gmail au salarié.</span></div>`;
+ }
+ if(S.screen==='releve'){
+  const R=[['m1',158,8,6,2,'1 semaine + 2 h'],['m2',150,0,0,0,'—'],['m3',149,3,0,0,'—'],['m4',146,0,0,0,'—']];
+  h+=`<div class="band"><span class="title">Relevé du mois</span><span style="font-size:14px;color:var(--g)">période de paie du 26/10 au 25/11/2026 · clôture le 25</span></div><div class="content">
+  <div class="new"><span class="chip">Nouveau · relevé calculé depuis les pointages et les demandes accordées</span>
+  <table><tr><th>Salarié</th><th>Heures de présence</th><th>Absences (h)</th><th>Au-delà de 152 h → RC</th><th>Heures supp validées</th><th>Astreinte</th><th>À vérifier</th></tr>`;
+  R.forEach(r=>{ const s=byId[r[0]]; h+=`<tr><td style="font-weight:600">${s.fn}</td><td>${r[1]} h</td><td>${r[2]}</td><td>${r[3]?B(C.blu,'+'+r[3]+' h RC'):'—'}</td><td>${r[4]?r[4]+' h':'—'}</td><td>${r[5]}</td><td>${r[0]==='m4'?B(C.org,'1 pointage manquant'):'—'}</td></tr>`; });
+  h+=`</table><div style="display:flex;justify-content:space-between;align-items:center"><span class="note">Absences = congés, RC posés, hors mécanique accordé : elles ne comptent pas comme heures faites. Astreinte = prime + interventions justifiées par le mécanicien.</span><a class="btn" data-a="envoyerReleve">Envoyer le relevé à la RH</a></div></div></div>`;
+ }
+ h+=`</div></div>`;
+ if(S.modal==='nouvelle'){ const s=byId[S.who];
+  h+=`<div class="overlay"><div class="modal"><b style="font-size:18px;color:var(--g)">Nouvelle demande</b>
+  <div class="row"><div class="f"><span class="lbl">Salarié</span><select class="field" id="fWho">${sal.map(x=>`<option value="${x.id}" ${x.id===S.who?'selected':''}>${x.fn}</option>`).join('')}</select></div><div class="f"><span class="lbl">Type</span><select class="field" id="fType">${['Congé','RC','Hors mécanique · rendez-vous','Hors mécanique · administratif','Formation','Heures supp'].map(t=>`<option ${S.f.type===t?'selected':''}>${t}</option>`).join('')}</select></div></div>
+  <div class="row"><div class="f"><span class="lbl">Du</span><input class="field" id="fDu" type="date" value="2026-11-20"></div><div class="f"><span class="lbl">Au</span><input class="field" id="fAu" type="date" value="2026-11-20"></div><div class="f"><span class="lbl">Durée</span><select class="field" id="fDuree"><option>Journée</option><option>Matin</option><option>Après-midi</option><option>Heures</option></select></div></div>
+  <div class="f"><span class="lbl">Motif (obligatoire pour les heures supp)</span><input class="field" id="fMotif" placeholder="ex. dépannage d'astreinte, rendez-vous…"></div>
+  <span class="note">À l'envoi : mail ${GM} au responsable d'équipe (${s.resp}). Après son accord : mail à la RH. Puis réponse au salarié et au responsable.</span>
+  <div style="display:flex;justify-content:flex-end;gap:8px"><a class="btn2" data-a="close">Annuler</a><a class="btn" data-a="envoyerDem">Envoyer la demande</a></div></div></div>`; }
+ if(S.toast) h+=`<div class="toast">${S.toast}</div>`;
+ document.getElementById('app').innerHTML=h;
+}
+const fmt=d=>d?d.split('-').reverse().join('/'):'';
+document.addEventListener('click',e=>{
+ const el=e.target.closest('[data-a]'); if(!el) return;
+ const i=el.dataset.a.indexOf(':'); const a=i<0?el.dataset.a:el.dataset.a.slice(0,i), v=i<0?'':el.dataset.a.slice(i+1);
+ if(el.tagName!=='INPUT') e.preventDefault();
+ if(a==='go') set({screen:v,toast:''});
+ else if(a==='filtre') set({filtre:v});
+ else if(a==='fiche') set({screen:'fiche',fiche:v,toast:''});
+ else if(a==='nouvelle') set({modal:'nouvelle',who:v,toast:''});
+ else if(a==='close') set({modal:null});
+ else if(a==='envoyerDem'){
+  const who=document.getElementById('fWho').value, type=document.getElementById('fType').value, du=fmt(document.getElementById('fDu').value), au=fmt(document.getElementById('fAu').value), duree=document.getElementById('fDuree').value, motif=document.getElementById('fMotif').value.trim();
+  if(type==='Heures supp' && !motif){ document.getElementById('fMotif').style.borderColor='#D64E5A'; document.getElementById('fMotif').placeholder='Motif obligatoire pour les heures supp'; return; }
+  const id='n'+(S.newDem.length+1); S.newDem.push({id,who,type,quand:(du===au?du:'du '+du+' au '+au)+' · '+duree.toLowerCase(),motif,st:0});
+  set({modal:null,screen:'demandes',toast:'Demande envoyée · mail Gmail au responsable d\'équipe ('+byId[who].resp+')'});
+ }
+ else if(a==='ok'){ const d=demList().find(x=>x.id===v); const n=d.st+1; S.dem[v]=n; set({toast: n===1?'Accord du responsable · mail Gmail envoyé à la RH':'Validée par la RH · réponse Gmail envoyée au salarié et au responsable · enregistrée dans la fiche et sur le planning'}); }
+ else if(a==='refus'){ S.dem[v]=3; set({toast:'Demande refusée · réponse Gmail envoyée au salarié'}); }
+ else if(a==='corr'){ S.pt[v]={arr:'07:50 (corrigé)',corr:true}; set({toast:'Pointage corrigé avec motif · mail Gmail au salarié · gardé dans l\'historique'}); }
+ else if(a==='envoyerReleve') set({toast:'Relevé du 26/10 au 25/11 envoyé à la RH par Gmail (1 point à vérifier : pointage manquant)'});
+ else if(a==='plain'){ document.body.classList.toggle('plain',!el.checked); }
+});
+render();
+</script>
+</body>
+</html>
